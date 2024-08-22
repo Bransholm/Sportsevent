@@ -1,11 +1,9 @@
 package kea.exercise.sportsevent.controllers;
 
+import kea.exercise.sportsevent.dto.EventRequestDTO;
 import kea.exercise.sportsevent.entities.Event;
 import kea.exercise.sportsevent.services.EventService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +28,18 @@ public class EventController {
     @GetMapping("/by-discipline")
     public List<Event> getAllEventsByDiscipline(@RequestParam String discipline) {
         return eventService.getEventsByDiscipline(discipline);
+    }
+
+    // Create event
+    @PostMapping
+    public Event createEvent(@RequestBody EventRequestDTO eventRequestDTO) {
+        return eventService.createEvent(eventRequestDTO);
+    }
+
+    // Update event by id
+    @PutMapping("/{id}")
+    public Event updateEvent(@PathVariable int id, @RequestBody EventRequestDTO eventRequestDTO) {
+        return eventService.updateEvent(id, eventRequestDTO);
     }
 
 
