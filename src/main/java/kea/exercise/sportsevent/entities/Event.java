@@ -26,4 +26,8 @@ public class Event {
     private LocalDate date;
     private LocalTime startTime;
     private int durationMinutes;
+    @ManyToOne
+    private Arena arena;
+    @ManyToOne
+    private Discipline discipline;
 }

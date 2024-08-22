@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -25,4 +27,6 @@ public class Arena {
     private ArenaSurfaceEnum surface;
     private int length;
     private int lanes;
+    @ManyToMany
+    private List<Discipline> disciplines;
 }
