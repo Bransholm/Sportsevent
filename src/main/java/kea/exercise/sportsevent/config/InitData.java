@@ -2,15 +2,16 @@ package kea.exercise.sportsevent.config;
 
 import kea.exercise.sportsevent.entities.Arena;
 import kea.exercise.sportsevent.entities.Discipline;
-import kea.exercise.sportsevent.enums.ArenaTypeEnum;
-import kea.exercise.sportsevent.enums.ArenaShapeEnum;
-import kea.exercise.sportsevent.enums.ArenaSurfaceEnum;
+import kea.exercise.sportsevent.entities.Event;
+import kea.exercise.sportsevent.enums.*;
 import kea.exercise.sportsevent.repositories.ArenaRepository;
 import kea.exercise.sportsevent.repositories.DisciplineRepository;
 import kea.exercise.sportsevent.repositories.EventRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Arrays;
 
 @Component
@@ -41,9 +42,10 @@ public class InitData implements CommandLineRunner {
         }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         createDisciplines();
         createArenas();
+        createEvents();
         System.out.println("Init data is created");
     }
 
@@ -86,6 +88,34 @@ public class InitData implements CommandLineRunner {
         pool1 = new Arena("Pool1", ArenaTypeEnum.Pool, ArenaShapeEnum.Rectangle, ArenaSurfaceEnum.Water, 50, 8,
                 Arrays.asList(butterfly50m, breaststroke100m, freestyle200m));
         arenaRepository.save(pool1);
+    }
+
+    // Create events
+    private void createEvents() {
+        // Track1 Events
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Junior, 8, LocalDate.now(), LocalTime.of(9, 0), 60, track1, run100m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Junior, 8, LocalDate.now(), LocalTime.of(10, 0), 60, track1, run100m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Adult, 8, LocalDate.now(), LocalTime.of(11, 0), 60, track1, run1500m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Adult, 8, LocalDate.now(), LocalTime.of(12, 0), 60, track1, run1500m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Senior, 8, LocalDate.now(), LocalTime.of(13, 0), 60, track1, hurdless400m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Senior, 8, LocalDate.now(), LocalTime.of(14, 0), 60, track1, hurdless400m));
+
+        // Field1 Events
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Junior, 8, LocalDate.now(), LocalTime.of(9, 0), 60, field1, longjump));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Junior, 8, LocalDate.now(), LocalTime.of(10, 0), 60, field1, longjump));
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Adult, 8, LocalDate.now(), LocalTime.of(11, 0), 60, field1, highjump));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Adult, 8, LocalDate.now(), LocalTime.of(12, 0), 60, field1, highjump));
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Senior, 8, LocalDate.now(), LocalTime.of(13, 0), 60, field1, shotput));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Senior, 8, LocalDate.now(), LocalTime.of(14, 0), 60, field1, shotput));
+
+        // Pool1 Events
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Junior, 8, LocalDate.now(), LocalTime.of(9, 0), 60, pool1, butterfly50m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Junior, 8, LocalDate.now(), LocalTime.of(10, 0), 60, pool1, butterfly50m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Adult, 8, LocalDate.now(), LocalTime.of(11, 0), 60, pool1, breaststroke100m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Adult, 8, LocalDate.now(), LocalTime.of(12, 0), 60, pool1, breaststroke100m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Male, ParticipantAgeGroupEnum.Senior, 8, LocalDate.now(), LocalTime.of(13, 0), 60, pool1, freestyle200m));
+        eventRepository.save(new Event(ParticipantGenderEnum.Female, ParticipantAgeGroupEnum.Senior, 8, LocalDate.now(), LocalTime.of(14, 0), 60, pool1, freestyle200m));
+
     }
 
 }
