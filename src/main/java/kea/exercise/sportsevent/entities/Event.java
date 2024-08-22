@@ -30,4 +30,15 @@ public class Event {
     private Arena arena;
     @ManyToOne
     private Discipline discipline;
+
+    public Event(ParticipantGenderEnum participantGender, ParticipantAgeGroupEnum participantAgeGroup, int maximumParticipants, LocalDate date, LocalTime startTime, int durationMinutes, Arena arena, Discipline discipline) {
+        this.participantGender = participantGender;
+        this.participantAgeGroup = participantAgeGroup;
+        this.maximumParticipants = maximumParticipants;
+        this.date = date;
+        this.startTime = startTime;
+        this.durationMinutes = durationMinutes;
+        this.arena = arena;
+        this.discipline = discipline;
+    }
 }

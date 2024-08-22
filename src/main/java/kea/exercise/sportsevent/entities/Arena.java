@@ -29,4 +29,14 @@ public class Arena {
     private int lanes;
     @ManyToMany
     private List<Discipline> disciplines;
+
+    public Arena(String name, ArenaTypeEnum type, ArenaShapeEnum shape, ArenaSurfaceEnum surface, int length, int lanes, List<Discipline> disciplines) {
+        this.name = name;
+        this.type = type;
+        this.shape = shape;
+        this.surface = surface;
+        this.length = length;
+        this.lanes = lanes;
+        this.disciplines = disciplines;
+    }
 }
