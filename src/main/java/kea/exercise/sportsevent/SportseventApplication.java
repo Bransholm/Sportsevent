@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SportseventApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(SportseventApplication.class, args);
+        System.out.println("Sportsevent app is running");
     }
 
 }
