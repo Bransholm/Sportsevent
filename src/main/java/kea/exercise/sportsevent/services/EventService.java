@@ -48,7 +48,8 @@ public class EventService {
         Discipline discipline = disciplineRepository.findById(eventRequestDTO.getDisciplineId())
                 .orElseThrow(() -> new IllegalArgumentException("Discipline not found"));
 
-        checkArenaAvailability(arena, eventRequestDTO.getDate(), eventRequestDTO.getStartTime(), eventRequestDTO.getDurationMinutes());
+        // Pass null as eventId because this is a new event
+        checkArenaAvailability(arena, eventRequestDTO.getDate(), eventRequestDTO.getStartTime(), eventRequestDTO.getDurationMinutes(), null);
         checkArenaDisciplineCompatibility(arena, discipline);
 
         Event event = new Event();
@@ -67,7 +68,8 @@ public class EventService {
         Discipline discipline = disciplineRepository.findById(eventRequestDTO.getDisciplineId())
                 .orElseThrow(() -> new IllegalArgumentException("Discipline not found"));
 
-        checkArenaAvailability(arena, eventRequestDTO.getDate(), eventRequestDTO.getStartTime(), eventRequestDTO.getDurationMinutes());
+        // Pass the eventId to ignore the current event when checking availability
+        checkArenaAvailability(arena, eventRequestDTO.getDate(), eventRequestDTO.getStartTime(), eventRequestDTO.getDurationMinutes(), eventId);
         checkArenaDisciplineCompatibility(arena, discipline);
 
         setEventAttributes(event, eventRequestDTO, arena, discipline);
@@ -92,11 +94,16 @@ public class EventService {
     }
 
     // Check for double booking
-    public void checkArenaAvailability(Arena arena, LocalDate date, LocalTime startTime, int durationMinutes) {
+    public void checkArenaAvailability(Arena arena, LocalDate date, LocalTime startTime, int durationMinutes, Integer eventId) {
         LocalTime endTime = startTime.plusMinutes(durationMinutes);
 
         List<Event> events = eventRepository.findByArenaAndDate(arena, date);
         for (Event existingEvent : events) {
+            // Skip the current event when checking for conflicts during update
+            if (eventId != null && existingEvent.getId() == eventId) {
+                continue;
+            }
+
             LocalTime existingStartTime = existingEvent.getStartTime();
             LocalTime existingEndTime = existingStartTime.plusMinutes(existingEvent.getDurationMinutes());
 
