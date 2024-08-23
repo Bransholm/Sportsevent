@@ -3,6 +3,7 @@ package kea.exercise.sportsevent.controllers;
 import kea.exercise.sportsevent.dto.EventRequestDTO;
 import kea.exercise.sportsevent.entities.Event;
 import kea.exercise.sportsevent.services.EventService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,6 +41,12 @@ public class EventController {
     @PutMapping("/{id}")
     public Event updateEvent(@PathVariable int id, @RequestBody EventRequestDTO eventRequestDTO) {
         return eventService.updateEvent(id, eventRequestDTO);
+    }
+
+    // Delete event by id
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Event> deleteOneEvent(@PathVariable int id) {
+        return eventService.deleteOneEvent(id);
     }
 
 

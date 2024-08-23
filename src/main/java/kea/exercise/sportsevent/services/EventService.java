@@ -7,11 +7,15 @@ import kea.exercise.sportsevent.entities.Event;
 import kea.exercise.sportsevent.repositories.ArenaRepository;
 import kea.exercise.sportsevent.repositories.DisciplineRepository;
 import kea.exercise.sportsevent.repositories.EventRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -77,6 +81,14 @@ public class EventService {
         return eventRepository.save(event);
     }
 
+    // Delete event by id
+    public ResponseEntity<Event> deleteOneEvent(int id) {
+        Optional<Event> teacherToDelete = Optional.ofNullable(eventRepository.findById(id).orElseThrow(()
+                -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Teacher not found, can't delete")));
+        eventRepository.deleteById(id);
+        return ResponseEntity.of(teacherToDelete);
+    }
+
 
 
     // Business Logic
@@ -121,10 +133,5 @@ public class EventService {
             throw new IllegalArgumentException("The discipline does not match the arena's capabilities.");
         }
     }
-
-
-
-
-
 
 }
